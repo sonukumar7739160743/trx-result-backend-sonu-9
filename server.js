@@ -6,6 +6,7 @@ const HOST = "bigdaddy-goagames-tiranga-91club-trx-api-with-result.p.rapidapi.co
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
 });
@@ -19,6 +20,7 @@ app.get("/api/results", async (req, res) => {
     const response = await fetch(
       `https://${HOST}/api/v1/wingoresult/type/30`,
       {
+        method: "GET",
         headers: {
           "X-RapidAPI-Host": HOST,
           "X-RapidAPI-Key": process.env.RAPIDAPI_KEY
@@ -28,6 +30,7 @@ app.get("/api/results", async (req, res) => {
 
     const data = await response.json();
     res.status(response.status).json(data);
+
   } catch (error) {
     res.status(500).json({
       success: false,
